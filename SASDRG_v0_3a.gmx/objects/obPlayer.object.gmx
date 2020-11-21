@@ -230,7 +230,32 @@ global.lightOffsetY = lengthdir_y(16,point_direction(x,y,mouse_x,mouse_y) + 180)
           <argument>
             <kind>1</kind>
             <string>if weaponCooldown &gt; 5 {
-    action_create_object_motion(obBullet,x,y,32,point_direction(x,y,mouse_x,mouse_y) + random_range(-5,5));
+    /// Boolet
+    scanDir = point_direction(x,y,mouse_x,mouse_y) + random_range(-5,5);
+    scanX = x;
+    scanY = y;
+    changeX = lengthdir_x(4,scanDir);
+    changeY = lengthdir_y(4,scanDir);
+    
+    velocity = 200;
+    
+    while velocity {
+        scanX += changeX;
+        scanY += changeY;
+        velocity -= 1;
+        for (i = 0; i &lt; 1; i += 0.25) {
+            part_particles_create(obPart.part,scanX + i * changeX,scanY+ i * changeY,obPart.bullet,1);
+        }
+        if position_meeting(scanX + changeX,scanY,obWall) {
+            changeX *= -1;
+            velocity -= 100;
+        }
+        if position_meeting(scanX,scanY + changeY,obWall) {
+            changeY *= -1;
+            velocity -= 100
+        }
+    }
+    
     weaponCooldown = 0;
 }
 </string>
