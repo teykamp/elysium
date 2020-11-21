@@ -247,11 +247,13 @@ global.lightOffsetY = lengthdir_y(16,point_direction(x,y,mouse_x,mouse_y) + 180)
             part_particles_create(obPart.part,scanX + i * changeX,scanY+ i * changeY,obPart.bullet,1);
         }
         if position_meeting(scanX + changeX,scanY,obWall) {
-            changeX *= -1;
+            if abs(changeX) &lt; 1.5
+                changeX *= -1;
             velocity -= 100;
         }
         if position_meeting(scanX,scanY + changeY,obWall) {
-            changeY *= -1;
+            if abs(changeY) &lt; 1.5
+                changeY *= -1;
             velocity -= 100
         }
     }
