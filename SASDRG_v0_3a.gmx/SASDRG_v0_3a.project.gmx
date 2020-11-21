@@ -12,6 +12,7 @@
     <sprite>sprites\spWall</sprite>
     <sprite>sprites\spTrail</sprite>
     <sprite>sprites\spEnemy</sprite>
+    <sprite>sprites\spLantern</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -34,6 +35,7 @@
     <object>objects\obPart</object>
     <object>objects\obBullet</object>
     <object>objects\obEnemy</object>
+    <object>objects\obLantern</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\varDeclare</room>

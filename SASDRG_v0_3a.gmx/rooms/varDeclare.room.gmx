@@ -14,6 +14,8 @@
 global.cameraDrag = 0.75;
 global.lightOffsetX = 0;
 global.lightOffsetY = 0;
+global.beamWidth = 25;
+global.lightResolution = 1;
 room_goto_next();</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>

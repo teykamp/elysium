@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>drawn = true;
+            <string>/*
+drawn = true;
 shadow_distance = 768;
 vertX[5] = 0;
 vertY[5] = 0;
@@ -51,7 +52,8 @@ vertY[5] = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Calculates if shadow is needed
+            <string>/*
+/// Calculates if shadow is needed
 if instance_exists(obPlayer){
     playerX = obPlayer.x + global.lightOffsetX;
     playerY = obPlayer.y + global.lightOffsetY;
@@ -86,7 +88,8 @@ if instance_exists(obPlayer){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Calculate vertexs
+            <string>/*
+/// Calculate vertexs
 if drawn {    
     dir = point_direction(x + 16,y + 16,obPlayer.x + global.lightOffsetX,obPlayer.y + global.lightOffsetY);
     if dir &gt;= 0 and dir &lt;= 90
@@ -159,7 +162,8 @@ if drawn {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if drawn{
+            <string>/*
+if drawn{
     draw_set_color(c_black);
     
     // main
@@ -197,7 +201,9 @@ if drawn {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>
+draw_self();
+/*
     dir[0] = point_direction(playerX,playerY,vertX[0],vertY[0])
     dir[1] = point_direction(playerX,playerY,vertX[1],vertY[1])
     dir[2] = point_direction(playerX,playerY,vertX[2],vertY[2])

@@ -205,8 +205,8 @@ weaponCooldown += 1;
           <argument>
             <kind>1</kind>
             <string>/// Test
-global.lightOffsetX = lengthdir_x(16,point_direction(x,y,mouse_x,mouse_y) + 180);
-global.lightOffsetY = lengthdir_y(16,point_direction(x,y,mouse_x,mouse_y) + 180);
+global.lightOffsetX = lengthdir_x(12,point_direction(x,y,mouse_x,mouse_y) + 180);
+global.lightOffsetY = lengthdir_y(12,point_direction(x,y,mouse_x,mouse_y) + 180);
 </string>
           </argument>
         </arguments>
@@ -276,23 +276,86 @@ global.lightOffsetY = lengthdir_y(16,point_direction(x,y,mouse_x,mouse_y) + 180)
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>self</whoName>
+        <whoName>other</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_black);
+            <string>/// Draws flashlight border
+draw_self();
+/*
+playerX = x + global.lightOffsetX;
+playerY = y + global.lightOffsetY;
+lightDir = point_direction(x,y,mouse_x,mouse_y);
+
 surface_set_target(obShadowSurf.surf);
+draw_set_color(c_dkgray);
 draw_primitive_begin(pr_trianglefan)
 draw_vertex(playerX,playerY);
-draw_vertex(playerX+ lengthdir_x(768,lightDir - 30),playerY+ lengthdir_y(768,lightDir - 30))
+draw_vertex(playerX+ lengthdir_x(768,lightDir - 25),playerY+ lengthdir_y(768,lightDir - 25))
 draw_vertex(playerX+ lengthdir_x(768,lightDir - 90),playerY+ lengthdir_y(768,lightDir - 90))
 draw_vertex(playerX+ lengthdir_x(768,lightDir + 180),playerY+ lengthdir_y(768,lightDir + 180))
 draw_vertex(playerX+ lengthdir_x(768,lightDir + 90),playerY+ lengthdir_y(768,lightDir + 90))
-draw_vertex(playerX+ lengthdir_x(768,lightDir + 30),playerY+ lengthdir_y(768,lightDir + 30))
+draw_vertex(playerX+ lengthdir_x(768,lightDir + 25),playerY+ lengthdir_y(768,lightDir + 25))
 draw_primitive_end();
+draw_set_color(c_white);
 surface_reset_target();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>other</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Raycast subtraction lighting
+draw_self();
+if instance_exists(obWall) {
+    playerX = x + global.lightOffsetX;
+    playerY = y + global.lightOffsetY;
+    lightDir = point_direction(x,y,mouse_x,mouse_y);
+    
+    draw_set_blend_mode(bm_subtract);
+    surface_set_target(obShadowSurf.surf);
+    draw_primitive_begin(pr_trianglefan);
+    draw_vertex(playerX,playerY);
+    for (i = -global.beamWidth; i &lt;= global.beamWidth; i += global.lightResolution) {
+        scanX = playerX;
+        scanY = playerY;
+        scanDir = lightDir + i;
+        changeX = lengthdir_x(1,scanDir);
+        changeY = lengthdir_y(1,scanDir);
+        for (j = 0; j &lt; 20; j ++) {
+            target = instance_nearest(scanX-16,scanY-16,obWall);
+            if instance_exists(target) {
+                distance = point_distance(scanX-16,scanY-16,target.x,target.y);
+                if distance &lt; 24 &amp;&amp; position_meeting(scanX,scanY,obWall) {
+                    break;
+                }
+                distance = max(distance,0.25);
+                scanX += changeX * distance;
+                scanY += changeY * distance;
+            }
+        }
+        draw_vertex(scanX,scanY);
+    }
+    draw_primitive_end();
+    surface_reset_target();
+    draw_set_blend_mode(bm_normal);
+}
 </string>
           </argument>
         </arguments>
@@ -315,24 +378,74 @@ surface_reset_target();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draws flashlight border
-draw_self();
-playerX = x + global.lightOffsetX;
-playerY = y + global.lightOffsetY;
-lightDir = point_direction(x,y,mouse_x,mouse_y);
-
+            <string>/*
+draw_set_color(c_black);
 surface_set_target(obShadowSurf.surf);
-draw_set_color(c_dkgray);
 draw_primitive_begin(pr_trianglefan)
 draw_vertex(playerX,playerY);
-draw_vertex(playerX+ lengthdir_x(768,lightDir - 25),playerY+ lengthdir_y(768,lightDir - 25))
+draw_vertex(playerX+ lengthdir_x(768,lightDir - 30),playerY+ lengthdir_y(768,lightDir - 30))
 draw_vertex(playerX+ lengthdir_x(768,lightDir - 90),playerY+ lengthdir_y(768,lightDir - 90))
 draw_vertex(playerX+ lengthdir_x(768,lightDir + 180),playerY+ lengthdir_y(768,lightDir + 180))
 draw_vertex(playerX+ lengthdir_x(768,lightDir + 90),playerY+ lengthdir_y(768,lightDir + 90))
-draw_vertex(playerX+ lengthdir_x(768,lightDir + 25),playerY+ lengthdir_y(768,lightDir + 25))
+draw_vertex(playerX+ lengthdir_x(768,lightDir + 30),playerY+ lengthdir_y(768,lightDir + 30))
 draw_primitive_end();
-draw_set_color(c_white);
 surface_reset_target();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Raycast subtraction lighting
+draw_set_alpha(0.5);
+if instance_exists(obWall) {
+    playerX = x + global.lightOffsetX / 2;
+    playerY = y + global.lightOffsetY / 2;
+    lightDir = point_direction(x,y,mouse_x,mouse_y);
+    
+    draw_set_blend_mode(bm_subtract);
+    surface_set_target(obShadowSurf.surf);
+    draw_primitive_begin(pr_trianglefan);
+    draw_vertex(playerX,playerY);
+    for (i = -global.beamWidth - 5; i &lt;= global.beamWidth + 5; i += global.lightResolution) {
+        scanX = playerX;
+        scanY = playerY;
+        scanDir = lightDir + i;
+        changeX = lengthdir_x(1,scanDir);
+        changeY = lengthdir_y(1,scanDir);
+        for (j = 0; j &lt; 20; j ++) {
+            target = instance_nearest(scanX-16,scanY-16,obWall);
+            if instance_exists(target) {
+                distance = point_distance(scanX-16,scanY-16,target.x,target.y);
+                if distance &lt; 16 &amp;&amp; position_meeting(scanX,scanY,obWall) {
+                    break;
+                }
+                distance = max(distance,0.25);
+                scanX += changeX * distance;
+                scanY += changeY * distance;
+            }
+        }
+        draw_vertex(scanX,scanY);
+    }
+    draw_primitive_end();
+    surface_reset_target();
+    draw_set_blend_mode(bm_normal);
+}
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>
