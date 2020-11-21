@@ -230,7 +230,7 @@ global.lightOffsetY = lengthdir_y(16,point_direction(x,y,mouse_x,mouse_y) + 180)
           <argument>
             <kind>1</kind>
             <string>if weaponCooldown &gt; 5 {
-    /// Boolet
+    /// Bullet
     scanDir = point_direction(x,y,mouse_x,mouse_y) + random_range(-5,5);
     scanX = x;
     scanY = y;

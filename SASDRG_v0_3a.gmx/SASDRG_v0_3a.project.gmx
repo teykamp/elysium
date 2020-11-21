@@ -41,15 +41,15 @@
     <room>rooms\room1</room>
   </rooms>
   <constants number="9">
-    <constant name="SHOOT_RANGE">600</constant>
-    <constant name="MESSAGE_MISS">7</constant>
-    <constant name="MESSAGE_HIT">6</constant>
-    <constant name="MESSAGE_SHOOT">5</constant>
     <constant name="MESSAGE_GETID">4</constant>
+    <constant name="MESSAGE_HIT">6</constant>
     <constant name="MESSAGE_JOIN">2</constant>
     <constant name="MESSAGE_LEAVE">3</constant>
-    <constant name="UPDATE_SPEED">3</constant>
+    <constant name="MESSAGE_MISS">7</constant>
     <constant name="MESSAGE_MOVE">1</constant>
+    <constant name="MESSAGE_SHOOT">5</constant>
+    <constant name="SHOOT_RANGE">600</constant>
+    <constant name="UPDATE_SPEED">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -54,14 +54,13 @@ while (true) {
             
             clientObject.x = xx;
             clientObject.y = yy;
-        }
         
         break;
         
-        //case MESSAGE_JOIN:
+        case MESSAGE_JOIN:
             // DO SOMETHING
         
-        //break;
+        break;
         
         
         // delete player after disconnect
@@ -85,8 +84,8 @@ while (true) {
         clientshot = client_get_object(clientshotid),
         shootdirection = buffer_read(bufer, buffer_u16),
         shootlength = buffer_read(buffer, buffer_u16),
-        hit_x = clamp(clientshoot.x + lengthdir_x(shootlength, shootdirection), clientshoot.x, clientshoot.x + 16),
-        hit_x = clamp(clientshoot.y + lengthdir_y(shootlength, shootdirection), clientshoot.y, clientshoot.y + 16);
+        hit_x = clamp(clientshoot.x + lengthdir_x(shootlength, shootdirection), clientshot.x, clientshot.x + 16),
+        hit_x = clamp(clientshoot.y + lengthdir_y(shootlength, shootdirection), clientshot.y, clientshot.y + 16);
         
         break;
         
@@ -100,6 +99,8 @@ while (true) {
         
         break;
     
+    } // end of switch (keep below all case statements)
+        
     // buffer > 256 bytes?
     if (buffer_tell(buffer) == buffer_get_size(buffer)) {
     
