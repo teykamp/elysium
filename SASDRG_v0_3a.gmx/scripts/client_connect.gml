@@ -54,17 +54,7 @@ while (true) {
             
             clientObject.x = xx;
             clientObject.y = yy;
-            
-            //send to server
-            with (obServerClient) {
-                // dont send to self
-                if (client_id !=client_id_current) {
-                
-                    network_send_raw(self.socket_id, other.send_buffer, buffer_tell(other.send_buffer));
-                
-                }
-            
-            }
+        }
         
         break;
         
@@ -85,8 +75,31 @@ while (true) {
                 instance_destroy();
         
         break;
+        
+        case MESSAGE_HIT:
+        
+        var
+        clientshootid = buffer_read(buffer, buffer_u16),
+        clientshoot = client_get_object(clientshootid),
+        clientshotid = buffer_read(buffer, buffer_u16),
+        clientshot = client_get_object(clientshotid),
+        shootdirection = buffer_read(bufer, buffer_u16),
+        shootlength = buffer_read(buffer, buffer_u16),
+        hit_x = clamp(clientshoot.x + lengthdir_x(shootlength, shootdirection), clientshoot.x, clientshoot.x + 16),
+        hit_x = clamp(clientshoot.y + lengthdir_y(shootlength, shootdirection), clientshoot.y, clientshoot.y + 16);
+        
+        break;
+        
+        case MESSAGE_MISS:
+        
+        var
+        clientshootid = buffer_read(buffer, buffer_u16),
+        clientshoot = client_get_object(clientshootid),
+        shootdirection = buffer_read(bufer, buffer_u16),
+        shootlength = buffer_read(buffer, buffer_u16);
+        
+        break;
     
-    }
     // buffer > 256 bytes?
     if (buffer_tell(buffer) == buffer_get_size(buffer)) {
     
