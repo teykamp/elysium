@@ -28,7 +28,9 @@
             <string>if !life
     instance_destroy();
 life -= 1;
-part_particles_create(obPart.part,x,y,obPart.bullet,1);
+for (var i = 0; i &lt; speed; i ++) {
+    part_particles_create(obPart.part,x + (i/speed) * hspeed,y + (i/speed) * vspeed,obPart.bullet,1);
+}
 speed *= 0.9;
 
 // Collisions

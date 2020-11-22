@@ -373,10 +373,10 @@ global.screenShake += 5;
         }
     }
     if position_meeting(scanX,scanY,obWall) {
-        for (var j = 0; j &lt; 4; j ++ ) {
+        for (var j = 0; j &lt; 6; j ++ ) {
             var i = instance_create(scanX,scanY,obBulletSplatter);
-            i.hspeed = random_range(-8,8);
-            i.vspeed = random_range(-8,8);
+            i.hspeed = random_range(-12,12);
+            i.vspeed = random_range(-12,12);
             i.life = random(j * 3);
         }
     }

@@ -32,7 +32,7 @@ part_system_depth( part, -100 );
 bullet = part_type_create();
 part_type_sprite(bullet,spTrail,false,false,false);
 part_type_life(bullet,15,20);
-part_type_size(bullet,0.1,0.1,-0.005,0);
+part_type_size(bullet,0.1,0.15,-0.005,0);
 </string>
           </argument>
         </arguments>
