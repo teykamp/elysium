@@ -89,8 +89,8 @@ if point_distance(x,y,targetX,targetY) &gt; 3 {
     y = targetY;
 }
 speed *= drag;
-if abs(angle_difference(targetRotation,rotation)) &gt;= 5 {
-    rotation += sign(angle_difference(targetRotation,rotation)) * 5;
+if abs(angle_difference(targetRotation,rotation)) &gt;= 10 {
+    rotation += sign(angle_difference(targetRotation,rotation)) * 10;
 } else {
     rotation = targetRotation;
 }
