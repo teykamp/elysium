@@ -22,7 +22,6 @@ return server;
 var
 socket_id = argument0;
 
-var
 l = instance_create(0, 0, obServerClient);
 l.socket_id = socket_id;
 l.client_id = client_id_counter++;
@@ -36,11 +35,6 @@ if (client_id_counter >= 65000) {
 
 // adds to clientmap
 clientmap[? string(socket_id)] = l;
-
-buffer_seek(send_buffer, buffer_seek_start, 0);
-buffer_write(send_buffer, buffer_u8, MESSAGE_GETID);
-buffer_write(send_buffer, buffer_u16, l.client_id);
-network_send_raw(socket_id, send_buffer, buffer_tell(send_buffer));
 
 #define server_handle_message
 ///server_handle_meessage(socket_id, buffer);
@@ -65,9 +59,6 @@ while (true) {
             xx = buffer_read(buffer, buffer_u16);
             yy = buffer_read(buffer, buffer_u16);
             
-            clientObject.x = xx;
-            clientObject.y = yy;
-            
             // send data
             // reset byte counter
             buffer_seek(send_buffer, buffer_seek_start, 0); 
@@ -88,16 +79,7 @@ while (true) {
             
         
         break;
-        
-        case MESSAGE_SHOOT:
-        
-            var
-            shootdirection = buffer_read(buffer, buffer_u16);
-            
-            server_handle_shoot(shootdirection, clientObject);
-        
-        break;
-        
+    
     }
     // buffer > 256 bytes?
     if (buffer_tell(buffer) == buffer_get_size(buffer)) {
@@ -114,10 +96,6 @@ while (true) {
 var
 socket_id = argument0;
 
-buffer_seek(send_buffer, buffer_seek_start, 0);
-buffer_write(send_buffer, buffer_u8, MESSAGE_LEAVE);
-buffer_write(send_buffer, buffer_u16, clientmap[? string(socket_id)].client_id);
-
 with (clientmap[? (string(socket_id))]) {
 
     instance_destroy();
@@ -125,82 +103,3 @@ with (clientmap[? (string(socket_id))]) {
 }
 
 ds_map_delete(clientmap, string(socket_id));
-
-with (obServerClient) {
-
-    network_send_raw(self.socket_id, other.send_buffer, buffer_tell(other.send_buffer));
-
-}
-
-#define server_handle_shoot
-/*
-///server_handle_shoot(shootdirection, clientObject)
-
-var
-shootdirection = argument0,
-tempObject = argument1,
-hit = false,
-obj = noone,
-// the number is the number of pixels we want to map to (smaller =  more precise)
-scan_length = 10;
-
-var
-prx = tempObject.x, // previous x
-pry = tempObject.y, // previous y
-prog = 0, // progress
-tox = prx, // to x
-toy = pry; // to y
-
-with (tempObject) {
-
-    while (prog < SHOOT_RANGE) {
-
-        tox = prx + lengthdir_x(scan_length, shootdirection);
-        toy = pry + lengthdir_y(scan_length, shootdirection);
-        obj = collision_line(prx, pry, tox, toy, all, false, true);
-        if (instance_exists(obj)) {
-            //hit
-            hit = true;
-            prog += scan_length;
-            break;
-        
-        }
-        
-        prx = tox;
-        pry = toy;
-        prog += scan_length;
-    
-    }
-
-}
-
-if (hit) { // hit
-
-    buffer_seek(send_buffer, buffer_seek_start, 0);
-    buffer_write(send_buffer, buffer_u8, MESSAGE_HIT);
-    buffer_write(send_buffer, buffer_u16, tempObject.client_id);
-    buffer_write(send_buffer, buffer_u16, obj.client_id);
-    buffer_write(send_buffer, buffer_u16, shootdirection);
-    buffer_write(send_buffer, buffer_u16, prog);
-    
-    with (obServerClient) {
-    
-        network_send_raw(self.socket_id, other.send_buffer, buffer_tell(other.send_buffer));
-    
-    }
-
-} else { // miss
-
-    buffer_seek(send_buffer, buffer_seek_start, 0);
-    buffer_write(send_buffer, buffer_u8, MESSAGE_MISS);
-    buffer_write(send_buffer, buffer_u16, tempObject.client_id);
-    buffer_write(send_buffer, buffer_u16, shootdirection);
-    buffer_write(send_buffer, buffer_u16, prog);
-    
-    with (obServerClient) {
-    
-        network_send_raw(self.socket_id, other.send_buffer, buffer_tell(other.send_buffer));
-    
-    }
-
-}
