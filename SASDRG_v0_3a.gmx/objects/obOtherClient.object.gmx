@@ -145,7 +145,7 @@ surface_set_target(obShadowSurf.surf);
 draw_set_color(c_black);
 draw_set_alpha(1);
 draw_set_blend_mode(bm_subtract);
-draw_circle(x,y,32,false);
+draw_circle(x,y,16,false);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();

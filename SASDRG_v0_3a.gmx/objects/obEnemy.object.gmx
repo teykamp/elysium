@@ -41,8 +41,10 @@ if instance_exists(obPlayer){
         if position_meeting(scanX,scanY,obWall)
             wallBlock -= 0.1;
     }
+    // Proximity
+    proximity = (48 - point_distance(x,y,obPlayer.x,obPlayer.y)) / 16;
     
-    image_alpha = min(wallBlock * wallBlock, noLight);
+    image_alpha = max(min(wallBlock * wallBlock, noLight),proximity);
 }
 </string>
           </argument>

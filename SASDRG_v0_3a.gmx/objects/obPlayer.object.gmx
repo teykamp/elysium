@@ -238,6 +238,30 @@ lightDir = round(point_direction(x,y,mouse_x,mouse_y));
         </arguments>
       </action>
     </event>
+    <event eventtype="4" ename="obEnemy">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>motion_add(point_direction(other.x,other.y,x,y),5);
+global.screenShake += 5;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="6" enumb="50">
       <action>
         <libid>1</libid>
@@ -260,31 +284,32 @@ lightDir = round(point_direction(x,y,mouse_x,mouse_y));
     scanDir = point_direction(x,y,mouse_x,mouse_y) + random_range(-5,5);
     scanX = x;
     scanY = y;
-    changeX = lengthdir_x(4,scanDir);
-    changeY = lengthdir_y(4,scanDir);
+    changeX = lengthdir_x(8,scanDir);
+    changeY = lengthdir_y(8,scanDir);
     
-    velocity = 200;
+    velocity = 120;
     
     while velocity {
         scanX += changeX;
         scanY += changeY;
         velocity -= 1;
-        for (i = 0; i &lt; 1; i += 0.25) {
+        for (i = 0; i &lt; 1; i += 0.2) {
             part_particles_create(obPart.part,scanX + i * changeX,scanY+ i * changeY,obPart.bullet,1);
         }
         if position_meeting(scanX + changeX,scanY,obWall) {
-            if abs(changeX) &lt; 1.5
-                changeX *= -1;
-            velocity -= 100;
+            if abs(changeX) &lt; 3
+                changeX *= -0.8;
+            velocity -= 60;
         }
         if position_meeting(scanX,scanY + changeY,obWall) {
-            if abs(changeY) &lt; 1.5
-                changeY *= -1;
-            velocity -= 100
+            if abs(changeY) &lt; 3
+                changeY *= -0.8;
+            velocity -= 60;
         }
     }
     
     weaponCooldown = 0;
+    global.screenShake += 2;
 }
 </string>
           </argument>
@@ -364,7 +389,7 @@ surface_set_target(obShadowSurf.surf);
 draw_set_color(c_black);
 draw_set_alpha(1);
 draw_set_blend_mode(bm_subtract);
-draw_circle(x,y,32,false);
+draw_circle(x,y,16,false);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();
