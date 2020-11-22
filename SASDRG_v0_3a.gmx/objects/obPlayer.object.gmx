@@ -349,8 +349,8 @@ global.screenShake += 5;
                 changeX *= -0.8;
                 for (var j = 0; j &lt; 3; j ++ ) {
                     var i = instance_create(scanX,scanY,obBulletSplatter);
-                    i.hspeed = -changeX + random(4);
-                    i.vspeed = -changeY + random(4);
+                    i.hspeed = changeX + random(4);
+                    i.vspeed = changeY + random(4);
                     i.life = random(20);
                 }
             }
@@ -361,8 +361,8 @@ global.screenShake += 5;
                 changeY *= -0.8;
                 for (var j = 0; j &lt; 3; j ++ ) {
                     var i = instance_create(scanX,scanY,obBulletSplatter);
-                    i.hspeed = -changeX + random(4);
-                    i.vspeed = -changeY + random(4);
+                    i.hspeed = changeX + random(4);
+                    i.vspeed = changeY + random(4);
                     i.life = random(20);
                 }
             }
