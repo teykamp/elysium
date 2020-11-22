@@ -12,8 +12,6 @@
   <showcolour>-1</showcolour>
   <code>global.cameraSpeed = 8; // lower is faster, 1 is instant
 global.cameraDrag = 0.75;
-global.lightOffsetX = 0;
-global.lightOffsetY = 0;
 global.beamWidth = 25;
 global.lightResolution = 1;
 room_goto_next();</code>

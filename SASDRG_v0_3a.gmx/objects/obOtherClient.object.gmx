@@ -7,7 +7,257 @@
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Variables
+drag = 0.8;
+moveSpeed = 1;
+playerRadius = 16;
+targetRotation = 0;
+rotation = 0;
+targetX = x;
+targetY = y;
+lightOffsetX = 0;
+lightOffsetY = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// light offset
+lightOffsetX = lengthdir_x(12,rotation + 180);
+lightOffsetY = lengthdir_y(12,rotation + 180);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Interpolate rotation and direction
+if point_distance(x,y,targetX,targetY) &gt; 4 {
+    motion_add(point_direction(x,y,targetX,targetY),moveSpeed);
+} else {
+    speed *= drag;
+}
+speed *= drag;
+if abs(angle_difference(targetRotation,rotation)) &gt;= 5 {
+    rotation += sign(angle_difference(targetRotation,rotation)) * 5;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="54">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>targetRotation = point_direction(targetX,targetY,mouse_x,mouse_y);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>targetX = mouse_x;
+targetY = mouse_y;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>other</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Raycast subtraction lighting
+draw_self();
+if instance_exists(obWall) {
+    playerX = x + lightOffsetX;
+    playerY = y + lightOffsetY;
+    lightDir = rotation;
+    
+    draw_set_blend_mode(bm_subtract);
+    surface_set_target(obShadowSurf.surf);
+    draw_primitive_begin(pr_trianglefan);
+    draw_vertex(playerX,playerY);
+    for (i = -global.beamWidth; i &lt;= global.beamWidth; i += global.lightResolution) {
+        scanX = playerX;
+        scanY = playerY;
+        scanDir = lightDir + i;
+        changeX = lengthdir_x(1,scanDir);
+        changeY = lengthdir_y(1,scanDir);
+        for (j = 0; j &lt; 20; j ++) {
+            target = instance_nearest(scanX-16,scanY-16,obWall);
+            if instance_exists(target) {
+                distance = point_distance(scanX-16,scanY-16,target.x,target.y);
+                if distance &lt; 24 &amp;&amp; position_meeting(scanX,scanY,obWall) {
+                    break;
+                }
+                distance = max(distance,0.25);
+                scanX += changeX * distance;
+                scanY += changeY * distance;
+            }
+        }
+        draw_vertex(scanX,scanY);
+    }
+    draw_primitive_end();
+    surface_reset_target();
+    draw_set_blend_mode(bm_normal);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Raycast subtraction lighting
+draw_set_alpha(0.5);
+if instance_exists(obWall) {
+    playerX = x + lightOffsetX / 2;
+    playerY = y + lightOffsetY / 2;
+    lightDir = rotation;
+    
+    draw_set_blend_mode(bm_subtract);
+    surface_set_target(obShadowSurf.surf);
+    draw_primitive_begin(pr_trianglefan);
+    draw_vertex(playerX,playerY);
+    for (i = -global.beamWidth - 5; i &lt;= global.beamWidth + 5; i += global.lightResolution) {
+        scanX = playerX;
+        scanY = playerY;
+        scanDir = lightDir + i;
+        changeX = lengthdir_x(1,scanDir);
+        changeY = lengthdir_y(1,scanDir);
+        for (j = 0; j &lt; 20; j ++) {
+            target = instance_nearest(scanX-16,scanY-16,obWall);
+            if instance_exists(target) {
+                distance = point_distance(scanX-16,scanY-16,target.x,target.y);
+                if distance &lt; 16 &amp;&amp; position_meeting(scanX,scanY,obWall) {
+                    break;
+                }
+                distance = max(distance,0.25);
+                scanX += changeX * distance;
+                scanY += changeY * distance;
+            }
+        }
+        draw_vertex(scanX,scanY);
+    }
+    draw_primitive_end();
+    surface_reset_target();
+    draw_set_blend_mode(bm_normal);
+}
+draw_set_alpha(1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
