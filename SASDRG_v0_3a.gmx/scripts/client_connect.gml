@@ -152,6 +152,7 @@ if (ds_map_exists(clientmap, string(client))) {
 }
 
 #define client_send_shoot
+/*
 ///client_send_shoot(direction)
 
 var

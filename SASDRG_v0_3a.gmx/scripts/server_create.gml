@@ -133,6 +133,7 @@ with (obServerClient) {
 }
 
 #define server_handle_shoot
+/*
 ///server_handle_shoot(shootdirection, clientObject)
 
 var

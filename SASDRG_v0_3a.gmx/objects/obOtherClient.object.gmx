@@ -81,62 +81,19 @@ lightOffsetY = lengthdir_y(12,rotation + 180);
           <argument>
             <kind>1</kind>
             <string>/// Interpolate rotation and direction
-if point_distance(x,y,targetX,targetY) &gt; 4 {
+if point_distance(x,y,targetX,targetY) &gt; 3 {
     motion_add(point_direction(x,y,targetX,targetY),moveSpeed);
 } else {
     speed *= drag;
+    x = targetX;
+    y = targetY;
 }
 speed *= drag;
 if abs(angle_difference(targetRotation,rotation)) &gt;= 5 {
     rotation += sign(angle_difference(targetRotation,rotation)) * 5;
+} else {
+    rotation = targetRotation;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="54">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>targetRotation = point_direction(targetX,targetY,mouse_x,mouse_y);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="53">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>targetX = mouse_x;
-targetY = mouse_y;
 </string>
           </argument>
         </arguments>
