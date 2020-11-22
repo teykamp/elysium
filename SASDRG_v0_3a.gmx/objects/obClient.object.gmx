@@ -28,7 +28,6 @@
             <string>// localhost (change IP later)
 // make sure port is the same as in server object
 connect = client_connect("127.0.0.1", 9000);
-
 alarm[0] = UPDATE_SPEED;
 </string>
           </argument>
