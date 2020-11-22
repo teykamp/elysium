@@ -8,6 +8,55 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>brightness = 64;
+current = 64;
+change = 4;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>change += (brightness - current) / 64;
+current += change / 64;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="73">
       <action>
         <libid>1</libid>
@@ -29,7 +78,7 @@
 draw_set_color(c_black);
 draw_set_alpha(1);
 draw_set_blend_mode(bm_subtract);
-draw_circle(x,y,64,false);
+draw_circle(x,y,current,false);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();
@@ -60,7 +109,7 @@ surface_set_target(obShadowSurf.surf);
 draw_set_color(c_black);
 draw_set_alpha(0.5);
 draw_set_blend_mode(bm_subtract);
-draw_circle(x,y,80,false);
+draw_circle(x,y,current * 1.5,false);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();

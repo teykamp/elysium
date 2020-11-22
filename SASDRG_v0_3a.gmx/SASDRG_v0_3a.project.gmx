@@ -36,6 +36,7 @@
     <object>objects\obBullet</object>
     <object>objects\obEnemy</object>
     <object>objects\obLantern</object>
+    <object>objects\obBulletSplatter</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\varDeclare</room>
