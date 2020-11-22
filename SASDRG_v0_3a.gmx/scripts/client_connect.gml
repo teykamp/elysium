@@ -37,12 +37,15 @@ while (true) {
             var client = buffer_read(buffer, buffer_u16);
             xx = buffer_read(buffer, buffer_u16);
             yy = buffer_read(buffer, buffer_u16);
+            rot = buffer_read(buffer, buffer_u16);
+            
             // received message from this client before?
             if (ds_map_exists(clientmap, string(client))) {
                 // move object if seen before
                 var clientObject = clientmap[? string(client)];
                 clientObject.targetX = xx;
                 clientObject.targetY = yy;
+                clientObject.targetRotation = rot;
                 
             } else {
                 //create 
@@ -85,6 +88,7 @@ buffer_write(send_buffer, buffer_u8, MESSAGE_MOVE);
 // must send int, not float
 buffer_write(send_buffer, buffer_u16, round(obPlayer.x));
 buffer_write(send_buffer, buffer_u16, round(obPlayer.y));
+buffer_write(send_buffer, buffer_u16, round(point_direction(obPlayer.x, obPlayer.y, mouse_x, mouse_y)));
 
 network_send_raw(socket, send_buffer, buffer_tell(send_buffer));
 

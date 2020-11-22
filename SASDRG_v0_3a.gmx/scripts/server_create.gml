@@ -54,10 +54,11 @@ while (true) {
     switch(message_id) {
     
         case MESSAGE_MOVE:
-            // read client x,y
+            // read client x,y,rot
             var
             xx = buffer_read(buffer, buffer_u16);
             yy = buffer_read(buffer, buffer_u16);
+            rot = buffer_read(buffer, buffer_u16);
             
             // send data
             // reset byte counter
@@ -66,6 +67,7 @@ while (true) {
             buffer_write(send_buffer, buffer_u16, client_id_current);
             buffer_write(send_buffer, buffer_u16, xx);
             buffer_write(send_buffer, buffer_u16, yy);
+            buffer_write(send_buffer, buffer_u16, rot);
             
             with (obServerClient) {
                 // dont send client1 data back to client1
