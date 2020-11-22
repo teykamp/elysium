@@ -213,6 +213,30 @@ lightOffsetY = lengthdir_y(12,point_direction(x,y,mouse_x,mouse_y) + 180);
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// light hitscan variables
+playerX = x + lightOffsetX / 2;
+playerY = y + lightOffsetY / 2;
+lightDir = round(point_direction(x,y,mouse_x,mouse_y));
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="6" enumb="50">
       <action>
@@ -287,10 +311,6 @@ lightOffsetY = lengthdir_y(12,point_direction(x,y,mouse_x,mouse_y) + 180);
             <string>/// Raycast subtraction lighting
 draw_self();
 if instance_exists(obWall) {
-    playerX = x + lightOffsetX;
-    playerY = y + lightOffsetY;
-    lightDir = point_direction(x,y,mouse_x,mouse_y);
-    
     draw_set_blend_mode(bm_subtract);
     surface_set_target(obShadowSurf.surf);
     draw_primitive_begin(pr_trianglefan);
@@ -301,7 +321,7 @@ if instance_exists(obWall) {
         scanDir = lightDir + i;
         changeX = lengthdir_x(1,scanDir);
         changeY = lengthdir_y(1,scanDir);
-        for (j = 0; j &lt; 20; j ++) {
+        for (j = 0; j &lt; 8; j ++) {
             target = instance_nearest(scanX-16,scanY-16,obWall);
             if instance_exists(target) {
                 distance = point_distance(scanX-16,scanY-16,target.x,target.y);
@@ -344,10 +364,6 @@ if instance_exists(obWall) {
             <string>/// Raycast subtraction lighting
 draw_set_alpha(0.5);
 if instance_exists(obWall) {
-    playerX = x + lightOffsetX / 2;
-    playerY = y + lightOffsetY / 2;
-    lightDir = point_direction(x,y,mouse_x,mouse_y);
-    
     draw_set_blend_mode(bm_subtract);
     surface_set_target(obShadowSurf.surf);
     draw_primitive_begin(pr_trianglefan);
@@ -358,7 +374,7 @@ if instance_exists(obWall) {
         scanDir = lightDir + i;
         changeX = lengthdir_x(1,scanDir);
         changeY = lengthdir_y(1,scanDir);
-        for (j = 0; j &lt; 20; j ++) {
+        for (j = 0; j &lt; 8; j ++) {
             target = instance_nearest(scanX-16,scanY-16,obWall);
             if instance_exists(target) {
                 distance = point_distance(scanX-16,scanY-16,target.x,target.y);
