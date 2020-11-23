@@ -377,11 +377,13 @@ global.screenShake += 5;
             var i = instance_create(scanX,scanY,obBulletSplatter);
             i.hspeed = random_range(-12,12);
             i.vspeed = random_range(-12,12);
-            i.life = random(j * 3);
+            i.life = random(j * 2);
         }
     }
-    weaponCooldown = 0;
     global.screenShake += 1.5;
+    weaponCooldown = 0;
+    if instance_exists(obClient)
+        obClient.shotsFired += 1;
 }
 </string>
           </argument>

@@ -49,7 +49,6 @@
           <argument>
             <kind>1</kind>
             <string>if (txt == "create server") {
-
     with (obButton) instance_destroy();
     instance_create(0, 0, obServer);
     
@@ -62,7 +61,6 @@
     with (obButton) instance_destroy();
     instance_create(0, 0, obClient);
     instance_create(100, 100, obPlayer);
-
 }
 
 </string>

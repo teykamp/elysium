@@ -26,6 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>server = server_create(9000);
+
+instance_create(0, 0, obClient);
+instance_create(100, 100, obPlayer);
 </string>
           </argument>
         </arguments>

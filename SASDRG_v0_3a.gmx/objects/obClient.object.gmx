@@ -29,6 +29,7 @@
 // make sure port is the same as in server object
 connect = client_connect("127.0.0.1", 9000);
 alarm[0] = UPDATE_SPEED;
+shotsFired = 0;
 </string>
           </argument>
         </arguments>
@@ -77,6 +78,7 @@ alarm[0] = UPDATE_SPEED;
             <string>client_send_movement();
 // UPDATE_SPEED = 3 = game speed
 alarm[0] = UPDATE_SPEED;
+shotsFired = 0;
 </string>
           </argument>
         </arguments>
