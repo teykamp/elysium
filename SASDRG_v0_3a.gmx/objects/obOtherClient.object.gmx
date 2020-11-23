@@ -36,6 +36,7 @@ targetY = y;
 lightOffsetX = 0;
 lightOffsetY = 0;
 shotsFired = 0;
+shotsNeeded = 0;
 </string>
           </argument>
         </arguments>
@@ -162,8 +163,7 @@ lightDir = round(rotation);
           <argument>
             <kind>1</kind>
             <string>///Shots Fired
-if shotsFired != 0
-if 10 / shotsFired &lt; weaponCooldown {
+if shotsNeeded &amp;&amp; weaponCooldown {
     // Bullet
     scanDir = rotation + random_range(-5,5);
     scanX = x;
@@ -216,7 +216,8 @@ if 10 / shotsFired &lt; weaponCooldown {
             i.life = random(j * 2);
         }
     }
-    weaponCooldown -= 10 / shotsFired;
+    weaponCooldown =  5 / shotsNeeded
+    shotsNeeded -= 1;
     global.screenShake += 1.5;
 }
 </string>
@@ -240,8 +241,12 @@ if 10 / shotsFired &lt; weaponCooldown {
           <argument>
             <kind>1</kind>
             <string>/// weapon cooldown
-if shotsFired
-    weaponCooldown += 1;
+if shotsFired {
+    shotsNeeded += shotsFired
+    shotsFired = 0;
+}
+
+weaponCooldown += 1;
 </string>
           </argument>
         </arguments>

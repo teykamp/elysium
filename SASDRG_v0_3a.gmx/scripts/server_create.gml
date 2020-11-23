@@ -59,6 +59,7 @@ while (true) {
             xx = buffer_read(buffer, buffer_u16);
             yy = buffer_read(buffer, buffer_u16);
             rot = buffer_read(buffer, buffer_u16);
+            shot = buffer_read(buffer, buffer_u16);
             
             // send data
             // reset byte counter
@@ -68,6 +69,7 @@ while (true) {
             buffer_write(send_buffer, buffer_u16, xx);
             buffer_write(send_buffer, buffer_u16, yy);
             buffer_write(send_buffer, buffer_u16, rot);
+            buffer_write(send_buffer, buffer_u16, shot);
             
             with (obServerClient) {
                 // dont send client1 data back to client1

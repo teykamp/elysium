@@ -38,6 +38,7 @@ while (true) {
             xx = buffer_read(buffer, buffer_u16);
             yy = buffer_read(buffer, buffer_u16);
             rot = buffer_read(buffer, buffer_u16);
+            shot = buffer_read(buffer, buffer_u16);
             
             // received message from this client before?
             if (ds_map_exists(clientmap, string(client))) {
@@ -46,6 +47,7 @@ while (true) {
                 clientObject.targetX = xx;
                 clientObject.targetY = yy;
                 clientObject.targetRotation = rot;
+                clientObject.shotsFired = shot;
                 
             } else {
                 //create 
@@ -89,6 +91,7 @@ buffer_write(send_buffer, buffer_u8, MESSAGE_MOVE);
 buffer_write(send_buffer, buffer_u16, round(obPlayer.x));
 buffer_write(send_buffer, buffer_u16, round(obPlayer.y));
 buffer_write(send_buffer, buffer_u16, round(point_direction(obPlayer.x, obPlayer.y, mouse_x, mouse_y)));
+buffer_write(send_buffer, buffer_u16, obClient.shotsFired);
 
 network_send_raw(socket, send_buffer, buffer_tell(send_buffer));
 
