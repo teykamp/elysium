@@ -218,7 +218,7 @@ if shotsNeeded &amp;&amp; weaponCooldown {
     }
     weaponCooldown =  5 / shotsNeeded
     shotsNeeded -= 1;
-    global.screenShake += 1.5;
+    global.screenShake += 0.5;
 }
 </string>
           </argument>
@@ -306,11 +306,11 @@ if instance_exists(obWall) {
     draw_primitive_begin(pr_trianglefan);
     draw_vertex(playerX,playerY);
     for (i = -global.beamWidth; i &lt;= global.beamWidth; i += global.lightResolution) {
-        scanX = playerX;
-        scanY = playerY;
-        scanDir = lightDir + i;
-        changeX = lengthdir_x(1,scanDir);
-        changeY = lengthdir_y(1,scanDir);
+        var scanX = playerX;
+        var scanY = playerY;
+        var scanDir = lightDir + i;
+        var changeX = lengthdir_x(1,scanDir);
+        var changeY = lengthdir_y(1,scanDir);
         for (j = 0; j &lt; 8; j ++) {
             target = instance_nearest(scanX-16,scanY-16,obWall);
             if instance_exists(target) {
@@ -389,11 +389,11 @@ if instance_exists(obWall) {
     draw_primitive_begin(pr_trianglefan);
     draw_vertex(playerX,playerY);
     for (i = -global.beamWidth - 5; i &lt;= global.beamWidth + 5; i += global.lightResolution) {
-        scanX = playerX;
-        scanY = playerY;
-        scanDir = lightDir + i;
-        changeX = lengthdir_x(1,scanDir);
-        changeY = lengthdir_y(1,scanDir);
+        var scanX = playerX;
+        var scanY = playerY;
+        var scanDir = lightDir + i;
+        var changeX = lengthdir_x(1,scanDir);
+        var changeY = lengthdir_y(1,scanDir);
         for (j = 0; j &lt; 8; j ++) {
             target = instance_nearest(scanX-16,scanY-16,obWall);
             if instance_exists(target) {

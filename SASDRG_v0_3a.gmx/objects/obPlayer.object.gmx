@@ -31,7 +31,7 @@ moveSpeed = 1;
 playerRadius = 16;
 lightOffsetX = 0;
 lightOffsetY = 0;
-lightDistance = 8;
+lightDistance = 10;
 </string>
           </argument>
         </arguments>
@@ -380,7 +380,7 @@ global.screenShake += 5;
             i.life = random(j * 2);
         }
     }
-    global.screenShake += 1.5;
+    global.screenShake += 1;
     weaponCooldown = 0;
     if instance_exists(obClient)
         obClient.shotsFired += 1;
@@ -415,11 +415,11 @@ if instance_exists(obWall) {
     draw_primitive_begin(pr_trianglefan);
     draw_vertex(playerX,playerY);
     for (i = -global.beamWidth; i &lt;= global.beamWidth; i += global.lightResolution) {
-        scanX = playerX;
-        scanY = playerY;
-        scanDir = lightDir + i;
-        changeX = lengthdir_x(1,scanDir);
-        changeY = lengthdir_y(1,scanDir);
+        var scanX = playerX;
+        var scanY = playerY;
+        var scanDir = lightDir + i;
+        var changeX = lengthdir_x(1,scanDir);
+        var changeY = lengthdir_y(1,scanDir);
         for (j = 0; j &lt; lightDistance; j ++) {
             target = instance_nearest(scanX-16,scanY-16,obWall);
             if instance_exists(target) {
@@ -496,17 +496,17 @@ if instance_exists(obWall) {
     surface_set_target(obShadowSurf.surf);
     draw_primitive_begin(pr_trianglefan);
     draw_vertex(playerX,playerY);
-    for (i = -global.beamWidth - 5; i &lt;= global.beamWidth + 5; i += global.lightResolution) {
-        scanX = playerX;
-        scanY = playerY;
-        scanDir = lightDir + i;
-        changeX = lengthdir_x(1,scanDir);
-        changeY = lengthdir_y(1,scanDir);
-        for (j = 0; j &lt; lightDistance + 2; j ++) {
+    for (i = -global.beamWidth - 4; i &lt;= global.beamWidth + 4; i += global.lightResolution) {
+        var scanX = playerX;
+        var scanY = playerY;
+        var scanDir = lightDir + i;
+        var changeX = lengthdir_x(1,scanDir);
+        var changeY = lengthdir_y(1,scanDir);
+        for (j = 0; j &lt; lightDistance + 1; j ++) {
             target = instance_nearest(scanX-16,scanY-16,obWall);
             if instance_exists(target) {
                 distance = point_distance(scanX-16,scanY-16,target.x,target.y);
-                if distance &lt; 16 &amp;&amp; position_meeting(scanX,scanY,obWall) {
+                if distance &lt; 24 &amp;&amp; position_meeting(scanX,scanY,obWall) {
                     break;
                 }
                 distance = max(distance,0.25);
