@@ -25,11 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// localhost (change IP later)
-// make sure port is the same as in server object
-connect = client_connect("127.0.0.1", 9000);
-alarm[0] = UPDATE_SPEED;
-shotsFired = 0;
+            <string>///get IP
+
+connected = false;
+get_string_async("Please Enter IP You Wish To Connect To", "127.0.0.1");
+
 </string>
           </argument>
         </arguments>
@@ -108,6 +108,37 @@ shotsFired = 0;
         client_handle_message(async_load[? "buffer"]);
     
     break;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="63">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Join Server
+// make sure port is the same as in server object
+
+if (!connected) {
+    connected = true;
+    connect = client_connect(async_load[? "result"], 9000);
+    alarm[0] = UPDATE_SPEED;
+    shotsFired = 0;
 }
 </string>
           </argument>

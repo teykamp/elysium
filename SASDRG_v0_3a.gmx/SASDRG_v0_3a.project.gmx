@@ -23,11 +23,15 @@
     <script>scripts\client_connect.gml</script>
   </scripts>
   <objects name="objects">
-    <object>objects\obServer</object>
-    <object>objects\obServerClient</object>
-    <object>objects\obClient</object>
-    <object>objects\obOtherClient</object>
-    <object>objects\obPlayer</object>
+    <objects name="Server">
+      <object>objects\obServer</object>
+      <object>objects\obServerClient</object>
+    </objects>
+    <objects name="Client">
+      <object>objects\obClient</object>
+      <object>objects\obPlayer</object>
+      <object>objects\obOtherClient</object>
+    </objects>
     <object>objects\obButton</object>
     <object>objects\obWall</object>
     <object>objects\obCamera</object>
