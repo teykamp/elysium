@@ -12,7 +12,7 @@
   <showcolour>-1</showcolour>
   <code>global.cameraSpeed = 8; // lower is faster, 1 is instant
 global.cameraDrag = 0.75;
-global.beamWidth = 20;
+global.beamWidth = 45;
 global.lightResolution = 1;
 global.screenShake = 0;
 global.maxLightDistance = 240;

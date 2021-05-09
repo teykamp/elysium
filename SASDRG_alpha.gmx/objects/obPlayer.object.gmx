@@ -32,6 +32,7 @@ playerRadius = 16;
 lightOffsetX = 0;
 lightOffsetY = 0;
 lightDistance = 10;
+facingDirection = 0;
 </string>
           </argument>
         </arguments>
@@ -109,6 +110,10 @@ hspeed += hChange;
 vspeed += vChange;
 
 speed *= drag;
+
+if (speed &gt; 0.1) {
+    facingDirection = direction;
+}
 </string>
           </argument>
         </arguments>
@@ -208,8 +213,8 @@ weaponCooldown += 1;
           <argument>
             <kind>1</kind>
             <string>/// light offset
-lightOffsetX = lengthdir_x(12,point_direction(x,y,mouse_x,mouse_y) + 180);
-lightOffsetY = lengthdir_y(12,point_direction(x,y,mouse_x,mouse_y) + 180);
+lightOffsetX = lengthdir_x(12,facingDirection-180);
+lightOffsetY = lengthdir_y(12,facingDirection-180);
 </string>
           </argument>
         </arguments>
@@ -233,7 +238,7 @@ lightOffsetY = lengthdir_y(12,point_direction(x,y,mouse_x,mouse_y) + 180);
             <string>/// light hitscan variables
 playerX = x + lightOffsetX / 2;
 playerY = y + lightOffsetY / 2;
-lightDir = round(point_direction(x,y,mouse_x,mouse_y));
+lightDir = round(facingDirection);
 </string>
           </argument>
         </arguments>
@@ -329,7 +334,7 @@ global.screenShake += 5;
             <kind>1</kind>
             <string>if weaponCooldown &gt; 5 {
     /// Bullet
-    scanDir = point_direction(x,y,mouse_x,mouse_y) + random_range(-5,5);
+    scanDir = facingDirection + random_range(-5,5);
     scanX = x;
     scanY = y;
     changeX = lengthdir_x(8,scanDir);
