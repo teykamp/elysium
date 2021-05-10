@@ -33,6 +33,28 @@ lightOffsetX = 0;
 lightOffsetY = 0;
 lightDistance = 10;
 facingDirection = 0;
+
+// Bars
+hp = 10;
+hpMax = 10;
+
+energy = 10;
+energyMax = 10;
+energyRegenMultiplier = 1;
+energyRegenRate = 0;
+
+shield = 0;
+shieldMax = 3;
+shieldRegenMultiplier = 1;
+
+damage = 0;
+
+// GUI adjustment
+healthOffsetX = 32;
+healthOffsetY = 32;
+healthHeight = 48;
+healthWidth = 32;
+healthSpacing = 8;
 </string>
           </argument>
         </arguments>
@@ -108,6 +130,12 @@ if sign(abs(hChange)) &amp;&amp; sign(abs(vChange)) {
 }
 hspeed += hChange;
 vspeed += vChange;
+
+// Adaptive Camera
+if (object_exists(obCamera)) {
+    obCamera.x += hspeed;
+    obCamera.y += vspeed;
+}
 
 speed *= drag;
 
@@ -243,6 +271,53 @@ lightDir = round(facingDirection);
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Bars
+
+// Regen shield
+if (energy &gt; energyMax * 0.5 &amp;&amp; shield &lt; shieldMax) {
+     shield += 0.005 * shieldRegenMultiplier;
+}
+
+// Regen energy
+energyRegenRate += 0.0005;
+if (energy &lt; energyMax) {
+    energy += energyRegenRate * energyRegenMultiplier;
+}
+if (energy &gt; energyMax) {
+    energy = energyMax;
+}
+
+energyMax = ceil(hp) + ceil(shield);
+
+// Damage
+if (damage != 0) {
+    shield -= damage;
+    if (shield &lt; 0) {
+        hp += shield;
+        shield = 0;
+    }
+    damage = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obEnemy">
       <action>
@@ -263,6 +338,7 @@ lightDir = round(facingDirection);
             <kind>1</kind>
             <string>motion_add(point_direction(other.x,other.y,x,y),5);
 global.screenShake += 5;
+damage = 3;
 </string>
           </argument>
         </arguments>
@@ -477,6 +553,58 @@ surface_reset_target();
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// draw energy
+draw_set_color(c_lime);
+draw_rectangle(healthOffsetX,
+    healthOffsetY + healthHeight + 16,
+    healthOffsetX + (energy * (healthWidth + healthSpacing) - healthSpacing),
+    healthOffsetY + healthHeight + 32,
+    false);
+
+// draw hp
+draw_set_color(c_red);
+
+for(var i = 0; i &lt; hp; i ++) {
+    draw_rectangle(healthOffsetX + (i * (healthWidth + healthSpacing)),
+        healthOffsetY,
+        healthOffsetX + ((i + 1) * (healthWidth + healthSpacing) - healthSpacing),
+        healthOffsetY + healthHeight,
+        false);
+}
+
+// draw shield
+shieldOffsetX = healthOffsetX + (ceil(hp) * (healthWidth + healthSpacing));
+draw_set_color(c_blue);
+
+for (var i = 0; i &lt; shield; i ++) {
+    draw_rectangle(shieldOffsetX + (i * (healthWidth + healthSpacing)),
+        healthOffsetY,
+        shieldOffsetX + ((i + 1) * (healthWidth + healthSpacing) - healthSpacing),
+        healthOffsetY + healthHeight,
+        false);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -556,6 +684,34 @@ draw_circle(x,y,48,false);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="32">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Dodge
+if (energy &gt; 5) {
+    energy -= 5;
+    energyRegenRate = 0;
+    motion_add(facingDirection, 40);
+}
 </string>
           </argument>
         </arguments>

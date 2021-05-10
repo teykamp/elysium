@@ -27,8 +27,10 @@
             <kind>1</kind>
             <string>/// Follow mouse
 // calculate target location
-targetX = (obPlayer.x * 5 + mouse_x * 1) / 6;
-targetY = (obPlayer.y * 5 + mouse_y * 1) / 6;
+//targetX = (obPlayer.x * 5 + mouse_x * 1) / 6;
+//targetY = (obPlayer.y * 5 + mouse_y * 1) / 6;
+targetX = obPlayer.x + lengthdir_x(64, obPlayer.facingDirection);
+targetY = obPlayer.y + lengthdir_y(64, obPlayer.facingDirection);
 // move towards target location
 motion_add(point_direction(x,y,targetX,targetY),point_distance(x,y,targetX,targetY) / global.cameraSpeed);
 // drag

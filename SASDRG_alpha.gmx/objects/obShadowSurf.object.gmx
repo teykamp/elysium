@@ -97,7 +97,7 @@ surf = surface_create(room_width,room_height);
             <kind>1</kind>
             <string>if surface_exists(surf)
 {
-    draw_set_alpha(0.9);
+    draw_set_alpha(1);
     draw_surface(surf,0,0);
     
     surface_set_target(surf);
