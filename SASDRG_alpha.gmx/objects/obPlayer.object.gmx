@@ -27,12 +27,16 @@
             <kind>1</kind>
             <string>/// Variables
 drag = 0.8;
-moveSpeed = 1;
+moveSpeedBase = 0.75;
+moveSpeed = 0;
+sprintMultiplier = 2;
 playerRadius = 16;
 lightOffsetX = 0;
 lightOffsetY = 0;
 lightDistance = 10;
 facingDirection = 0;
+dashDirection = 0;
+dashPower = 20;
 
 // Bars
 hp = 10;
@@ -55,6 +59,10 @@ healthOffsetY = 32;
 healthHeight = 48;
 healthWidth = 32;
 healthSpacing = 8;
+
+// cooldown
+weaponCooldown = 0;
+dashCooldown = 0;
 </string>
           </argument>
         </arguments>
@@ -81,28 +89,6 @@ instance_create(x,y,obCamera);
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// cooldown
-weaponCooldown = 0;
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="3" enumb="0">
       <action>
@@ -122,8 +108,15 @@ weaponCooldown = 0;
           <argument>
             <kind>1</kind>
             <string>/// Movement
-hChange = keyboard_check(ord("D")) - keyboard_check(ord("A")) * moveSpeed;
-vChange = keyboard_check(ord("S")) - keyboard_check(ord("W")) * moveSpeed;
+moveSpeed = moveSpeedBase;
+if (keyboard_check(vk_shift) &amp;&amp; speed &gt; 0.1 &amp;&amp; energy){
+    moveSpeed = moveSpeedBase * sprintMultiplier;
+    energyRegenRate = 0;
+    energy -= 0.05;
+}
+
+hChange = (keyboard_check(ord("D")) - keyboard_check(ord("A"))) * moveSpeed;
+vChange = (keyboard_check(ord("S")) - keyboard_check(ord("W"))) * moveSpeed;
 if sign(abs(hChange)) &amp;&amp; sign(abs(vChange)) {
     hChange *= 0.7;
     vChange *= 0.7;
@@ -141,6 +134,17 @@ speed *= drag;
 
 if (speed &gt; 0.1) {
     facingDirection = direction;
+}
+
+// Dash
+if (dashCooldown) {
+    var changeX = lengthdir_x(dashCooldown,dashDirection);
+    var changeY = lengthdir_y(dashCooldown,dashDirection);
+    if (!place_meeting(x + changeX,y + changeY, obWall)) {
+        x += changeX;
+        y += changeY;
+    }
+    dashCooldown -= 1;
 }
 </string>
           </argument>
@@ -336,9 +340,11 @@ if (damage != 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>motion_add(point_direction(other.x,other.y,x,y),5);
-global.screenShake += 5;
-damage = 3;
+            <string>if (!dashCooldown) {
+    motion_add(point_direction(other.x,other.y,x,y),5);
+    global.screenShake += 5;
+    damage = 3;
+}
 </string>
           </argument>
         </arguments>
@@ -680,7 +686,7 @@ surface_set_target(obShadowSurf.surf);
 draw_set_color(c_black);
 draw_set_alpha(0.5);
 draw_set_blend_mode(bm_subtract);
-draw_circle(x,y,48,false);
+draw_circle(x,y,40,false);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();
@@ -706,11 +712,12 @@ surface_reset_target();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Dodge
+            <string>/// Dash
 if (energy &gt; 5) {
     energy -= 5;
     energyRegenRate = 0;
-    motion_add(facingDirection, 40);
+    dashDirection = facingDirection;
+    dashCooldown = dashPower;
 }
 </string>
           </argument>
