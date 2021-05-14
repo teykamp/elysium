@@ -13,6 +13,7 @@
     <sprite>sprites\spTrail</sprite>
     <sprite>sprites\spEnemy</sprite>
     <sprite>sprites\spLantern</sprite>
+    <sprite>sprites\spGun</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -41,6 +42,11 @@
     <object>objects\obEnemy</object>
     <object>objects\obLantern</object>
     <object>objects\obBulletSplatter</object>
+    <objects name="Weapons">
+      <object>objects\obWeaponParent</object>
+      <object>objects\obWeaponDefault</object>
+    </objects>
+    <object>objects\object16</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\varDeclare</room>

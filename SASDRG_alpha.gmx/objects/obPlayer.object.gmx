@@ -63,6 +63,12 @@ healthSpacing = 8;
 // cooldown
 weaponCooldown = 0;
 dashCooldown = 0;
+
+// Equipment
+weaponSelected = 0;
+weapon[0] = noone;
+weapon[1] = noone;
+weapon[2] = noone;
 </string>
           </argument>
         </arguments>
@@ -322,6 +328,38 @@ if (damage != 0) {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Use weapons
+if (weapon[weaponSelected] != noone) {
+    weapon[weaponSelected].lmbPressed = false;
+    if (mouse_check_button(mb_left)) {
+        weapon[weaponSelected].lmbPressed = true;
+    }
+    
+    weapon[weaponSelected].rmbPressed = false;
+    if (mouse_check_button(mb_right)) {
+        weapon[weaponSelected].rmbPressed = true;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obEnemy">
       <action>
@@ -392,86 +430,6 @@ if (damage != 0) {
           <argument>
             <kind>1</kind>
             <string>lightDistance += 1;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="50">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if weaponCooldown &gt; 5 {
-    /// Bullet
-    scanDir = facingDirection + random_range(-5,5);
-    scanX = x;
-    scanY = y;
-    changeX = lengthdir_x(8,scanDir);
-    changeY = lengthdir_y(8,scanDir);
-    
-    velocity = 120;
-    
-    while velocity {
-        scanX += changeX;
-        scanY += changeY;
-        velocity -= 1;
-        for (i = 0; i &lt; 1; i += 0.2) {
-            part_particles_create(obPart.part,scanX + i * changeX,scanY+ i * changeY,obPart.bullet,1);
-        }
-        if position_meeting(scanX + changeX,scanY,obWall) {
-            if abs(changeX) &lt; 3 {
-                changeX *= -0.8;
-                for (var j = 0; j &lt; 3; j ++ ) {
-                    var i = instance_create(scanX,scanY,obBulletSplatter);
-                    i.hspeed = changeX + random(4);
-                    i.vspeed = changeY + random(4);
-                    i.life = random(20);
-                }
-            }
-            velocity -= 40;
-        }
-        if position_meeting(scanX,scanY + changeY,obWall) {
-            if abs(changeY) &lt; 3 {
-                changeY *= -0.8;
-                for (var j = 0; j &lt; 3; j ++ ) {
-                    var i = instance_create(scanX,scanY,obBulletSplatter);
-                    i.hspeed = changeX + random(4);
-                    i.vspeed = changeY + random(4);
-                    i.life = random(20);
-                }
-            }
-            velocity -= 40;
-        }
-        if position_meeting(scanX,scanY,obEnemy) {
-            velocity -= 40;
-        }
-    }
-    if position_meeting(scanX,scanY,obWall) {
-        for (var j = 0; j &lt; 6; j ++ ) {
-            var i = instance_create(scanX,scanY,obBulletSplatter);
-            i.hspeed = random_range(-12,12);
-            i.vspeed = random_range(-12,12);
-            i.life = random(j * 2);
-        }
-    }
-    global.screenShake += 1;
-    weaponCooldown = 0;
-    if instance_exists(obClient)
-        obClient.shotsFired += 1;
-}
 </string>
           </argument>
         </arguments>
@@ -606,6 +564,21 @@ for (var i = 0; i &lt; shield; i ++) {
         healthOffsetY + healthHeight,
         false);
 }
+
+// draw weapon
+for (var i = 0; i &lt; 3; i ++) {
+    if (weapon[i] != noone) {
+        draw_sprite_ext(weapon[i].sprite_index,
+            0,
+            i * 64 + 64,
+            view_hview[0] - 64,
+            4,
+            4,
+            0,
+            c_white,
+            1);
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -690,6 +663,57 @@ draw_circle(x,y,40,false);
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="67">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Swap weapon
+// move current weapon out of the way to avoid collision
+if (weapon[weaponSelected]) {
+    weapon[weaponSelected].x = x - 128;
+}
+
+// find weapon on the floor, if any
+// collision rectange returns the collided instance
+var dropped = collision_rectangle(x-16, y-16, x+16, y+16, obWeaponParent, false, false);
+if (dropped) {
+    // If you are holding a weapon, drop it
+    if (weapon[weaponSelected]) {
+        weapon[weaponSelected].draw = true;
+        weapon[weaponSelected].x = x - 16;
+        weapon[weaponSelected].y = y - 16;
+    }
+
+    // pick up weapon on the floor
+    weapon[weaponSelected] = dropped;
+    dropped.draw = false;
+} else {
+    // drop weapon
+    if (weapon[weaponSelected]) {
+        weapon[weaponSelected].draw = true;
+        weapon[weaponSelected].x = x - 16;
+        weapon[weaponSelected].y = y - 16;
+        weapon[weaponSelected] = noone;
+    }
+}
 </string>
           </argument>
         </arguments>
