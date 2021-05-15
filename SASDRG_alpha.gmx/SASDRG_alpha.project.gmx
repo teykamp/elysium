@@ -15,6 +15,7 @@
     <sprite>sprites\spLantern</sprite>
     <sprite>sprites\spGun</sprite>
     <sprite>sprites\sprite8</sprite>
+    <sprite>sprites\spCrosshair</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -32,11 +33,11 @@
     <objects name="Client">
       <object>objects\obClient</object>
       <object>objects\obPlayer</object>
+      <object>objects\obCamera</object>
       <object>objects\obOtherClient</object>
     </objects>
     <object>objects\obButton</object>
     <object>objects\obWall</object>
-    <object>objects\obCamera</object>
     <object>objects\obShadowSurf</object>
     <object>objects\obPart</object>
     <object>objects\obBullet</object>

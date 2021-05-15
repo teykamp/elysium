@@ -32,11 +32,14 @@ lmbPressed = 0;
 rmbPressed = 0;
 draw = 1;
 accuracy = 0;
+currentAccuracy = 0; // helper variable
 recoveryFlat = 1;
 recoveryMultiplier = 0.9;
-spread = 2;
+spread = 1.5;
 rofBase = 600; //Per minute
-velocity = 20;
+velocity = 32;
+
+holdTime = 0; // special variable to calculate spread
 
 maxCores = 4;
 core[0] = noone;
@@ -69,11 +72,17 @@ core[3] = noone;
 weaponCooldown += 1;
 if (lmbPressed) {
     while (weaponCooldown &gt;= 3600 / rofBase) {
+        holdTime += 1;
+        if (holdTime == 5) {
+            currentAccuracy = 0;
+            holdTime = 0;
+        }
+        
         x = obPlayer.x;
         y = obPlayer.y;
         facingDirection = obPlayer.facingDirection;
         
-        action_create_object_motion(obBullet,x,y,velocity,facingDirection + random_range(-accuracy, accuracy));
+        action_create_object_motion(obBullet,x,y,velocity,facingDirection + (holdTime mod 2 - 0.5) * currentAccuracy);
         
         /*
         scanDir = facingDirection + random_range(-5,5);
@@ -136,6 +145,7 @@ if (lmbPressed) {
             
     }
 } else {
+    holdTime = 0;
     weaponCooldown = min(weaponCooldown, 3600 / rofBase);
 }
 </string>
@@ -161,10 +171,13 @@ if (lmbPressed) {
             <string>/// Accuracy
 if (lmbPressed) {
     accuracy += spread;
+    currentAccuracy += spread;
 }
 accuracy *= recoveryMultiplier;
-if (accuracy &gt; 1) {
+currentAccuracy *= recoveryMultiplier;
+if (accuracy &gt; recoveryFlat) {
     accuracy -= recoveryFlat;
+    currentAccuracy -= recoveryFlat;
 }
 </string>
           </argument>

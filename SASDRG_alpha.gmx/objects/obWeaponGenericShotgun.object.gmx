@@ -34,7 +34,8 @@ draw = 1;
 spread = 5;
 rofBase = 100; //Per minute
 pellets = 5;
-velocity = 20;
+velocity = 28;
+accuracy = spread * 2;
 
 
 maxCores = 4;
@@ -73,7 +74,7 @@ if (lmbPressed) {
         facingDirection = obPlayer.facingDirection;
         
         for (var i = 0; i &lt; pellets; i ++) {
-            action_create_object_motion(obBullet,x,y,velocity - abs(i - pellets * 0.5),facingDirection + (spread / pellets * 2 * i) - spread + (spread / pellets));
+            action_create_object_motion(obBullet,x,y,velocity - abs(i + 0.5 - pellets / 2) / 2,facingDirection + (spread / pellets * 2 * i) - spread + (spread / pellets));
         }
         
         /*

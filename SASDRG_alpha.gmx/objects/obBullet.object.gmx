@@ -27,8 +27,8 @@
             <kind>1</kind>
             <string>for (var j = 0; j &lt; 6; j ++ ) {
     var i = instance_create(x,y,obBulletSplatter);
-    i.hspeed = random_range(-12,12);
-    i.vspeed = random_range(-12,12);
+    i.hspeed = random_range(-4,4) + hspeed * random_range(-1,1);
+    i.vspeed = random_range(-4,4) + vspeed * random_range(-1,1);
     i.life = random(j * 2);
 }
 </string>
