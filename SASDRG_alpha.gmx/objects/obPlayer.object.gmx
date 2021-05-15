@@ -66,6 +66,7 @@ dashCooldown = 0;
 
 // Equipment
 weaponSelected = 0;
+weaponMax = 3;
 weapon[0] = noone;
 weapon[1] = noone;
 weapon[2] = noone;
@@ -405,8 +406,10 @@ if (weapon[weaponSelected] != noone) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if lightDistance &gt; 0
-    lightDistance -= 1;
+            <string>weaponSelected -= 1;
+if (weaponSelected == -1) {
+    weaponSelected = weaponMax - 1;
+}
 </string>
           </argument>
         </arguments>
@@ -429,7 +432,10 @@ if (weapon[weaponSelected] != noone) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>lightDistance += 1;
+            <string>weaponSelected += 1;
+if (weaponSelected == weaponMax) {
+    weaponSelected = 0;
+}
 </string>
           </argument>
         </arguments>
@@ -565,13 +571,22 @@ for (var i = 0; i &lt; shield; i ++) {
         false);
 }
 
+// draw selection
+draw_set_alpha(0.5);
+draw_rectangle(weaponSelected * 128 + 64,
+    view_hport[0] / 2,
+    weaponSelected * 128 + 192,
+    view_hport[0] / 2 + 128,
+    false);
+
 // draw weapon
+draw_set_alpha(1);
 for (var i = 0; i &lt; 3; i ++) {
     if (weapon[i] != noone) {
         draw_sprite_ext(weapon[i].sprite_index,
             0,
-            i * 64 + 64,
-            view_hview[0] - 64,
+            i * 128 + 64,
+            view_hport[0] / 2,
             4,
             4,
             0,
@@ -579,6 +594,8 @@ for (var i = 0; i &lt; 3; i ++) {
             1);
     }
 }
+
+    
 </string>
           </argument>
         </arguments>
@@ -686,9 +703,12 @@ surface_reset_target();
           <argument>
             <kind>1</kind>
             <string>/// Swap weapon
+dropped = noone;
 // move current weapon out of the way to avoid collision
 if (weapon[weaponSelected]) {
     weapon[weaponSelected].x = x - 128;
+    weapon[weaponSelected].lmbPressed = false;
+    weapon[weaponSelected].rmbPressed = false;
 }
 
 // find weapon on the floor, if any

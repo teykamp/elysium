@@ -14,6 +14,7 @@
     <sprite>sprites\spEnemy</sprite>
     <sprite>sprites\spLantern</sprite>
     <sprite>sprites\spGun</sprite>
+    <sprite>sprites\sprite8</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -45,8 +46,9 @@
     <objects name="Weapons">
       <object>objects\obWeaponParent</object>
       <object>objects\obWeaponDefault</object>
+      <object>objects\obWeaponGenericShotgun</object>
+      <object>objects\object16</object>
     </objects>
-    <object>objects\object16</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\varDeclare</room>
