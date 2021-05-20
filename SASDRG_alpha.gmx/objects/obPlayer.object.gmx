@@ -139,10 +139,6 @@ if (object_exists(obCamera)) {
 
 speed *= drag;
 
-if (speed &gt; 0.1) {
-    facingDirection = direction;
-}
-
 // Dash
 if (dashCooldown) {
     var changeX = lengthdir_x(dashCooldown,dashDirection);
@@ -153,6 +149,9 @@ if (dashCooldown) {
     }
     dashCooldown -= 1;
 }
+
+// Aiming
+facingDirection = point_direction(x,y,mouse_x,mouse_y);
 </string>
           </argument>
         </arguments>
@@ -702,25 +701,22 @@ surface_reset_target();
             <kind>1</kind>
             <string>/// draw crosshair
 if (weapon[weaponSelected] != noone) {
-    draw_sprite_ext(spCrosshair,
+    draw_sprite(spCrosshair,
         0,
-        x + lengthdir_x(256,facingDirection) + lengthdir_x(weapon[weaponSelected].accuracy,facingDirection + 90),
-        y + lengthdir_y(256,facingDirection) + lengthdir_y(weapon[weaponSelected].accuracy,facingDirection + 90),
-        1,
-        1,
-        facingDirection,
-        c_white,
-        1);
+        mouse_x,
+        mouse_y)
         
-    draw_sprite_ext(spCrosshair,
-        0,
-        x + lengthdir_x(256,facingDirection) + lengthdir_x(weapon[weaponSelected].accuracy,facingDirection - 90),
-        y + lengthdir_y(256,facingDirection) + lengthdir_y(weapon[weaponSelected].accuracy,facingDirection - 90),
-        1,
-        -1,
-        facingDirection,
-        c_white,
-        1);
+    for(var i = 0; i &lt; 4; i ++)
+        {
+            draw_sprite_ext(spCrosshair,
+            1,
+            mouse_x + lengthdir_x(weapon[weaponSelected].accuracy,i * 90 + 45 + weapon[weaponSelected].accuracy * 15),
+            mouse_y + lengthdir_y(weapon[weaponSelected].accuracy,i * 90 + 45 + weapon[weaponSelected].accuracy * 15),
+            1,
+            1,
+            i * 90 + weapon[weaponSelected].accuracy * 15,
+            c_white,1);
+        }
 }
 </string>
           </argument>
