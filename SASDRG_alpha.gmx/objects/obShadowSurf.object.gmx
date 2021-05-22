@@ -101,7 +101,7 @@ surf = surface_create(room_width,room_height);
     draw_surface(surf,0,0);
     
     surface_set_target(surf);
-    //draw_set_alpha(0.5);
+    draw_set_alpha(0.55);
     draw_set_blend_mode(bm_add);
     draw_set_color(c_black);
     draw_rectangle(0,0,room_width,room_height,false);

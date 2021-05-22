@@ -67,7 +67,7 @@ for (var i = 0; i &lt; floor(speed / 4); i ++)
         if abs(vspeed) &lt; speed / 2
         {
             flipY = 1;
-            i = floor(speed / 4);
+            break;
         }
         else
         {   
@@ -81,7 +81,7 @@ for (var i = 0; i &lt; floor(speed / 4); i ++)
         if abs(hspeed) &lt; speed / 2
         {
             flipX = 1;
-            i = floor(speed / 4);
+            break;
         }
         else
         {
@@ -89,7 +89,7 @@ for (var i = 0; i &lt; floor(speed / 4); i ++)
         }
     }
 }
-change = sqrt(changeX * changeX + changeY * changeY);
+var change = sqrt(changeX * changeX + changeY * changeY);
 for (var i = 0; i &lt; floor(change); i ++)
 part_particles_create(obPart.part,x + changeX * i / floor(change),y + changeY * i / floor(change),obPart.bullet,1);
 

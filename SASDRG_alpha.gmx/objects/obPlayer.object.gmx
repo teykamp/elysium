@@ -37,6 +37,7 @@ lightDistance = 10;
 facingDirection = 0;
 dashDirection = 0;
 dashPower = 20;
+rotationMax = 20;
 
 // Bars
 hp = 10;
@@ -70,6 +71,7 @@ weaponMax = 3;
 weapon[0] = noone;
 weapon[1] = noone;
 weapon[2] = noone;
+toggleFlashlight = true;
 </string>
           </argument>
         </arguments>
@@ -149,9 +151,6 @@ if (dashCooldown) {
     }
     dashCooldown -= 1;
 }
-
-// Aiming
-facingDirection = point_direction(x,y,mouse_x,mouse_y);
 </string>
           </argument>
         </arguments>
@@ -360,6 +359,33 @@ if (weapon[weaponSelected] != noone) {
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Aiming
+var change = angle_difference(point_direction(x,y,mouse_x,mouse_y), facingDirection);
+if (abs(change) &gt; rotationMax) {
+    facingDirection += sign(change) * rotationMax;
+} else {
+    facingDirection = point_direction(x,y,mouse_x,mouse_y);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obEnemy">
       <action>
@@ -459,7 +485,7 @@ if (weaponSelected == -1) {
             <kind>1</kind>
             <string>/// Raycast subtraction lighting
 draw_self();
-if instance_exists(obWall) {
+if instance_exists(obWall) &amp;&amp; toggleFlashlight {
     draw_set_blend_mode(bm_subtract);
     surface_set_target(obShadowSurf.surf);
     draw_primitive_begin(pr_trianglefan);
@@ -619,7 +645,7 @@ for (var i = 0; i &lt; 3; i ++) {
             <kind>1</kind>
             <string>/// Raycast subtraction lighting
 draw_set_alpha(0.5);
-if instance_exists(obWall) {
+if instance_exists(obWall) &amp;&amp; toggleFlashlight {
     draw_set_blend_mode(bm_subtract);
     surface_set_target(obShadowSurf.surf);
     draw_primitive_begin(pr_trianglefan);
@@ -718,6 +744,29 @@ if (weapon[weaponSelected] != noone) {
             c_white,1);
         }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="70">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>toggleFlashlight = !toggleFlashlight;
 </string>
           </argument>
         </arguments>
