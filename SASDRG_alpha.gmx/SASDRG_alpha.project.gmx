@@ -16,6 +16,7 @@
     <sprite>sprites\spGun</sprite>
     <sprite>sprites\sprite8</sprite>
     <sprite>sprites\spCrosshair</sprite>
+    <sprite>sprites\spTracer</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
