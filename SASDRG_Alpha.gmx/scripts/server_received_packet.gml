@@ -4,7 +4,7 @@ socket = argument1;
 msgid = buffer_read(buffer, buffer_u8);
 
 switch(msgid) {
-    case network.move:
+    case 1: // move
         break;
 
 }

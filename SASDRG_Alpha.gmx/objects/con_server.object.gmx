@@ -25,12 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>enum network {
-    move,
-
-}
-
-port = 64198;
+            <string>port = 64198;
 max_clients = 4;
 
 network_create_server(network_socket_tcp, port, max_clients);
@@ -75,7 +70,7 @@ switch(type_event) {
         buffer = ds_map_find_value(async_load, "buffer");
         socket = ds_map_find_value(async_load, "id");
         buffer_seek(buffer, buffer_seek_start, 0);
-        received_packet(buffer, socket);
+        server_received_packet(buffer, socket);
         break; 
     
 }

@@ -24,7 +24,8 @@
   <scripts name="scripts">
     <script>scripts\server_create.gml</script>
     <script>scripts\client_connect.gml</script>
-    <script>scripts\received_packet.gml</script>
+    <script>scripts\server_received_packet.gml</script>
+    <script>scripts\client_received_packet.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="OldServer">
@@ -39,6 +40,9 @@
     </objects>
     <objects name="Server">
       <object>objects\con_server</object>
+    </objects>
+    <objects name="Client">
+      <object>objects\con_client</object>
     </objects>
     <object>objects\obButton</object>
     <object>objects\obWall</object>
@@ -58,8 +62,9 @@
   <rooms name="rooms">
     <room>rooms\varDeclare</room>
     <room>rooms\networkTest</room>
-    <room>rooms\rmServer</room>
     <room>rooms\room1</room>
+    <room>rooms\rmHost</room>
+    <room>rooms\rmConnect</room>
   </rooms>
   <constants number="9">
     <constant name="MESSAGE_GETID">4</constant>
