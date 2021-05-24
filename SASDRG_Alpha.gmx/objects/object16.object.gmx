@@ -110,7 +110,7 @@ rot += 1;
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="54">
+    <event eventtype="6" enumb="56">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -138,13 +138,16 @@ if (obPlayer.weapon[obPlayer.weaponSelected] == self) {
         }
     }
 
-points = 0;}
+points = 0;
+}
+
+accuracy = 0;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="53">
+    <event eventtype="6" enumb="50">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -161,10 +164,69 @@ points = 0;}
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (obPlayer.weapon[obPlayer.weaponSelected] == self) {
-    points += power(2,maxIterations);
-    pointListX[points] = mouse_x;
-    pointListY[points] = mouse_y;
+            <string>accuracy += 0.5;
+if (accuracy == 2) {
+    // First target
+    var target = instance_nearest(mouse_x,mouse_y,obEnemy);
+    if (point_distance(mouse_x,mouse_y,target.x,target.y) &lt; 128) {
+        targetX = target.x;
+        targetY = target.y;
+    } else {
+        targetX = mouse_x;
+        targetY = mouse_y;
+    }
+    
+    // Second target
+    target.x += 1024;
+    var target2 = instance_nearest(target.x - 1024,target.y,obEnemy);
+    target.x -= 1024;
+    if (point_distance(target.x,target.y,target2.x,target2.y) &lt; 256 &amp;&amp;
+        (point_distance(mouse_x,mouse_y,target2.x,target2.y) &lt; 256)) {
+        target2X = target2.x;
+        target2Y = target2.y;
+    } else {
+        target2X = targetX;
+        target2Y = targetY;
+    }
+    
+    if (obPlayer.weapon[obPlayer.weaponSelected] == self) {
+        points += power(2,maxIterations);
+        pointListX[points] = mouse_x;
+        pointListY[points] = mouse_y;
+        
+        points += power(2,maxIterations);
+        pointListX[points] = targetX;
+        pointListY[points] = targetY;
+        
+        points += power(2,maxIterations);
+        pointListX[points] = target2X;
+        pointListY[points] = target2Y;
+    }
+    
+    // random
+    var distance = point_distance(x,y,mouse_x,mouse_y) / 8;
+    for (var i = 0; i &lt; points; i ++) {
+        pointListX[i] += random_range(-distance, distance);
+        pointListY[i] += random_range(-distance, distance);
+    }
+}
+
+if (accuracy == 2.5) {
+    ///Particles
+    if (obPlayer.weapon[obPlayer.weaponSelected] == self) {
+        for (var i = 0; i &lt; points; i ++) {
+            var xchange = pointListX[i + 1] - pointListX[i];
+            var ychange = pointListY[i + 1] - pointListY[i];
+            var bothchange = sqrt(pointListX[i] * pointListX[i] + pointListY[i]) * pointListY[i];
+            for (var j = 0; j &lt; floor(bothchange / 1024); j ++) {
+                part_particles_create(obPart.part,pointListX[i] + xchange * j / floor(bothchange / 1024),pointListY[i] + ychange * j / floor(bothchange / 1024),obPart.bullet,1);
+            }
+        }
+    
+    points = 0;
+    }
+    
+    accuracy = 0;
 }
 </string>
           </argument>
