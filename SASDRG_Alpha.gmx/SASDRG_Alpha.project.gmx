@@ -16,6 +16,9 @@
     <sprite>sprites\spGun</sprite>
     <sprite>sprites\sprite8</sprite>
     <sprite>sprites\spCrosshair</sprite>
+    <sprite>sprites\spGroundBurn</sprite>
+    <sprite>sprites\spGroundFrozen</sprite>
+    <sprite>sprites\spFlame</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -49,6 +52,7 @@
     <object>objects\obShadowSurf</object>
     <object>objects\obPart</object>
     <object>objects\obBullet</object>
+    <object>objects\obFlame</object>
     <object>objects\obEnemy</object>
     <object>objects\obLantern</object>
     <object>objects\obBulletSplatter</object>
@@ -56,8 +60,12 @@
       <object>objects\obWeaponParent</object>
       <object>objects\obWeaponDefault</object>
       <object>objects\obWeaponGenericShotgun</object>
+      <object>objects\obWeaponFlamer</object>
       <object>objects\object16</object>
     </objects>
+    <object>objects\obElectric</object>
+    <object>objects\obGroundBurn</object>
+    <object>objects\obGroundFrozen</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\varDeclare</room>

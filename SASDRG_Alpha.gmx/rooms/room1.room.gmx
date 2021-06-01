@@ -89,9 +89,9 @@
     <instance objName="obOtherClient" x="320" y="96" name="inst_B9A28513" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obWeaponDefault" x="448" y="352" name="inst_13020D14" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obWeaponGenericShotgun" x="768" y="192" name="inst_E37DDF6A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="object16" x="448" y="224" name="inst_4A0E0C3F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obEnemy" x="128" y="320" name="inst_11909BA1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obEnemy" x="320" y="608" name="inst_0F4C867A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obWeaponFlamer" x="416" y="256" name="inst_9480553A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
