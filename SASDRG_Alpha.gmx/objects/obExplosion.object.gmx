@@ -8,7 +8,7 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="1" enumb="0">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,11 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (var j = 0; j &lt; 4; j ++ ) {
-    var i = instance_create(x,y,obBulletSplatter);
-    i.hspeed = random_range(-4,4) + hspeed * random_range(-1,1);
-    i.vspeed = random_range(-4,4) + vspeed * random_range(-1,1);
-    i.life = random(j * 2);
+            <string>current = 0;
+alpha = 1;
+
+for (var i = 0; i &lt; 360; i += 6) {
+    action_create_object_motion(obFlame,x,y,random(10),i);
+    action_create_object_motion(obBullet,x,y,random_range(16,24),i + random(10));
 }
 </string>
           </argument>
@@ -53,56 +54,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Collision
-flipX = 0;
-flipY = 0;
-changeX = 0;
-changeY = 0;
-for (var i = 0; i &lt; floor(speed / 4); i ++)
-{
-    if position_meeting(x,y + vspeed * (i / floor(speed / 4)),obWall)
-    {
-        changeX += hspeed * (i / floor(speed / 4));
-        changeY += vspeed * (i / floor(speed / 4));
-        if abs(vspeed) &lt; speed / 2
-        {
-            flipY = 1;
-            break;
-        }
-        else
-        {   
-            instance_destroy();
-        }
-    }
-    if position_meeting(x + hspeed * (i / floor(speed / 4)),y,obWall)
-    {
-        changeX += hspeed * (i / floor(speed / 4));
-        changeY += vspeed * (i / floor(speed / 4));
-        if abs(hspeed) &lt; speed / 2
-        {
-            flipX = 1;
-            break;
-        }
-        else
-        {
-            instance_destroy();
-        }
-    }
-}
-var change = sqrt(changeX * changeX + changeY * changeY);
-for (var i = 0; i &lt; floor(change); i ++)
-part_particles_create(obPart.part,x + changeX * i / floor(change),y + changeY * i / floor(change),obPart.bullet,1);
+            <string>alpha -= 0.05;
+current += 24;
 
-if flipX
-hspeed *= -1;
-if flipY
-vspeed *= -1;
-x += changeX;
-y += changeY;
+if (alpha &lt;= 0) {
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -119,31 +82,17 @@ y += changeY;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Particles
-if !position_meeting(x + hspeed / 2,y + vspeed / 2,obWall)
-{
-    for (var i = 0; i &lt; floor(speed); i += 2)
-    part_particles_create(obPart.part,x + hspeed * i / floor(speed),y + vspeed * i / floor(speed),obPart.bullet,1);
-}
+            <string>surface_set_target(obShadowSurf.surf);
+draw_set_color(c_black);
+draw_set_alpha(alpha);
+draw_set_blend_mode(bm_subtract);
+draw_circle(x,y,current * 1.5,false);
+draw_set_blend_mode(bm_normal);
+draw_set_alpha(1);
+surface_reset_target();
 </string>
           </argument>
         </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>203</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_kill_object</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
       </action>
     </event>
   </events>
