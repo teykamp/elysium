@@ -49,7 +49,7 @@
           <argument>
             <kind>1</kind>
             <string>// Create burning ground
-if (!position_meeting(mouse_x,mouse_y,obGroundBurn)) {
+if (!position_meeting(x,y,obGroundBurn)) {
     instance_create(floor(x / 32) * 32,floor(y / 32) * 32,obGroundBurn);
 }
 </string>
@@ -209,9 +209,11 @@ part_particles_create(obPart.part,x + hspeed * i / floor(speed),y + vspeed * i /
             <kind>1</kind>
             <string>surface_set_target(obShadowSurf.surf);
 draw_set_color(c_black);
-draw_set_alpha(0.5);
+draw_set_alpha(0.03);
 draw_set_blend_mode(bm_subtract);
-draw_circle(x,y,96,false);
+for (var i = 16; i &lt; 24; i ++) {
+    draw_circle(x + 24,y + 24,i * 4,false);
+}
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();

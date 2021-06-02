@@ -19,6 +19,7 @@
     <sprite>sprites\spGroundBurn</sprite>
     <sprite>sprites\spGroundFrozen</sprite>
     <sprite>sprites\spFlame</sprite>
+    <sprite>sprites\spFrost</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -53,6 +54,7 @@
     <object>objects\obPart</object>
     <object>objects\obBullet</object>
     <object>objects\obFlame</object>
+    <object>objects\obFreeze</object>
     <object>objects\obEnemy</object>
     <object>objects\obLantern</object>
     <object>objects\obBulletSplatter</object>
@@ -61,6 +63,7 @@
       <object>objects\obWeaponDefault</object>
       <object>objects\obWeaponGenericShotgun</object>
       <object>objects\obWeaponFlamer</object>
+      <object>objects\obWeaponIcer</object>
       <object>objects\object16</object>
     </objects>
     <object>objects\obElectric</object>

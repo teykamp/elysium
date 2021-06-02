@@ -26,9 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>life = 120;
-brightness = 64;
-current = 64;
-change = 16;
 </string>
           </argument>
         </arguments>
@@ -57,8 +54,6 @@ if (!life) {
     instance_destroy();
 }
 
-change += (brightness - current) / 64;
-current += change / 64;
 </string>
           </argument>
         </arguments>
@@ -80,37 +75,9 @@ current += change / 64;
           <argument>
             <kind>1</kind>
             <string>///Particles
-part_particles_create(obPart.part,x + 24,y + 24,obPart.fire,1);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="73">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>surface_set_target(obShadowSurf.surf);
-draw_set_color(c_black);
-draw_set_alpha(1);
-draw_set_blend_mode(bm_subtract);
-draw_circle(x + 24,y + 24,current,false);
-draw_set_blend_mode(bm_normal);
-draw_set_alpha(1);
-surface_reset_target();
+if (life mod 3 == 0) {
+    part_particles_create(obPart.part,x + 24,y + 24,obPart.fire,1);
+}
 </string>
           </argument>
         </arguments>
@@ -135,9 +102,11 @@ surface_reset_target();
             <kind>1</kind>
             <string>surface_set_target(obShadowSurf.surf);
 draw_set_color(c_black);
-draw_set_alpha(0.5);
+draw_set_alpha(0.03);
 draw_set_blend_mode(bm_subtract);
-draw_circle(x + 24,y + 24,current * 1.5,false);
+for (var i = 16; i &lt; 24; i ++) {
+    draw_circle(x + 24,y + 24,i * 4,false);
+}
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 surface_reset_target();
