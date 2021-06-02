@@ -212,7 +212,7 @@ draw_set_color(c_black);
 draw_set_alpha(0.03);
 draw_set_blend_mode(bm_subtract);
 for (var i = 16; i &lt; 24; i ++) {
-    draw_circle(x + 24,y + 24,i * 4,false);
+    draw_circle(x,y,i * 4,false);
 }
 draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);

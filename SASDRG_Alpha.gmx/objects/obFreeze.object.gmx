@@ -168,8 +168,7 @@ speed *= 0.98;
           <argument>
             <kind>1</kind>
             <string>///Particles
-part_particles_create(obPart.part,x + hspeed * i / floor(speed),y + vspeed * i / floor(speed),obPart.ice,1);
-
+part_particles_create(obPart.part,x + hspeed * i / floor(speed),y + vspeed * i / floor(speed),obPart.ice,2);
 </string>
           </argument>
         </arguments>

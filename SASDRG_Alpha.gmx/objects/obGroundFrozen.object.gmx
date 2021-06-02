@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>life = 30;
+            <string>life = 15;
 </string>
           </argument>
         </arguments>
@@ -75,7 +75,7 @@ if (!life) {
           <argument>
             <kind>1</kind>
             <string>///Particles
-part_particles_create(obPart.part,x + 24 + random_range(-16,16),y + 24 + random_range(-16,16),obPart.ice,1);
+part_particles_create(obPart.part,x + 24 + random_range(-24,24),y + 24 + random_range(-24,24),obPart.ice,1);
 </string>
           </argument>
         </arguments>
